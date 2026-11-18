@@ -47,7 +47,7 @@ public enum GraphicsPreset implements StringRepresentable {
             // reference default render distance and lets gen keep up; sim 4 keeps mob simulation
             // reasonable while trimming per-tick chunk ticking. Both are just defaults the user
             // can raise in Options once the native noise kernel lands.
-            boolean eaglerWeb = net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.webGpuBackendFactory != null;
+            boolean eaglerWeb = net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.isBrowserRuntime();
             int viewDistance = eaglerWeb ? 4 : 8;
             set(screen, minecraft.options.biomeBlendRadius(), eaglerWeb ? 0 : 1);
             set(screen, minecraft.options.renderDistance(), viewDistance);
