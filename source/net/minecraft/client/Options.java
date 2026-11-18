@@ -125,7 +125,7 @@ public class Options {
          : genericValueLabel(caption, Component.translatable("options.framerate", value)),
       new OptionInstance.IntRange(1, 26).xmap(value -> value * 10, value -> value / 10, true),
       Codec.intRange(10, 260),
-      120,
+      60,
       value -> Minecraft.getInstance().getFramerateLimitTracker().setFramerateLimit(value)
    );
    private PreferredGraphicsApi preferredGraphicsBackendFromStartup = PreferredGraphicsApi.DEFAULT;
@@ -161,7 +161,7 @@ public class Options {
       (caption, value) -> genericValueLabel(caption, Component.translatable(value.getKey())),
       new OptionInstance.SliderableEnum<>(List.of(GraphicsPreset.values()), GraphicsPreset.CODEC),
       GraphicsPreset.CODEC,
-      GraphicsPreset.FANCY,
+      GraphicsPreset.FAST,
       this::applyGraphicsPreset
    );
    private static final Component INACTIVITY_FPS_LIMIT_TOOLTIP_MINIMIZED = Component.translatable("options.inactivityFpsLimit.minimized.tooltip");
@@ -1472,7 +1472,7 @@ public class Options {
          OptionInstance.noTooltip(),
          (caption, value) -> genericValueLabel(caption, Component.translatable("options.chunks", value)),
          new OptionInstance.IntRange(2, largeDistances ? 32 : 16, false),
-         12,
+         6,
          var1 -> this.setGraphicsPresetToCustom()
       );
       this.simulationDistance = new OptionInstance<>(
@@ -1480,7 +1480,7 @@ public class Options {
          OptionInstance.noTooltip(),
          (caption, value) -> genericValueLabel(caption, Component.translatable("options.chunks", value)),
          new OptionInstance.IntRange(SharedConstants.DEBUG_ALLOW_LOW_SIM_DISTANCE ? 2 : 5, largeDistances ? 32 : 16, false),
-         12,
+         5,
          var1 -> this.setGraphicsPresetToCustom()
       );
       this.syncWrites = Util.getPlatform() == Util.OS.WINDOWS;

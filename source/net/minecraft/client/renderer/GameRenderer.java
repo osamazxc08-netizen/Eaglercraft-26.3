@@ -132,7 +132,7 @@ public class GameRenderer implements AutoCloseable, TrackedWaypoint.Projector {
       this.lightmapRenderStateExtractor = new LightmapRenderStateExtractor(this, minecraft);
 
       try {
-         int maxSectionBuilders = Runtime.getRuntime().availableProcessors();
+         int maxSectionBuilders = Math.max(1, Math.min(2, Runtime.getRuntime().availableProcessors()));
          this.renderBuffers = new RenderBuffers(maxSectionBuilders);
       } catch (OutOfMemoryError e) {
          MessageBox.error(

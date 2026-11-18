@@ -124,7 +124,7 @@ public class Options {
          : genericValueLabel(caption, Component.translatable("options.framerate", value)),
       new OptionInstance.IntRange(1, 26).xmap(value -> value * 10, value -> value / 10, true),
       Codec.intRange(10, 260),
-      120,
+      60,
       value -> Minecraft.getInstance().getFramerateLimitTracker().setFramerateLimit(value)
    );
    private PreferredGraphicsApi preferredGraphicsBackendFromStartup = PreferredGraphicsApi.DEFAULT;
@@ -163,7 +163,7 @@ public class Options {
       // Eagler (web): the preset is re-applied EVERY boot (Minecraft.<init>), so the
       // default preset decides the real defaults. FAST on web (Matej 2026-07-11) —
       // and GraphicsPreset.FAST itself is web-tuned to renderDistance 6 / sim 5.
-      net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.webGpuBackendFactory != null
+      net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.isBrowserRuntime()
          ? GraphicsPreset.FAST
          : GraphicsPreset.FANCY,
       this::applyGraphicsPreset
@@ -229,7 +229,7 @@ public class Options {
       "options.improvedTransparency", OptionInstance.cachedConstantTooltip(GRAPHICS_TOOLTIP_IMPROVED_TRANSPARENCY), false, value -> {
          // Eagler (web): the fabulous transparency post-chain cannot compile on the
          // WebGL2 backend (hard crash) — refuse the toggle outright.
-         if (value && net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.webGpuBackendFactory != null) {
+         if (value && net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.isBrowserRuntime()) {
             this.improvedTransparency().set(false);
             return;
          }
@@ -1519,7 +1519,7 @@ public class Options {
       // Eagler (web): single-thread meshing + worldgen make big view distances the #1
       // frame-time cost — default 6/5 chunks (eag26 low-end profile; Matej 2026-07-11).
       // A saved options.txt still overrides these defaults via load() below.
-      boolean eaglerWeb = net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.webGpuBackendFactory != null;
+      boolean eaglerWeb = net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.isBrowserRuntime();
       this.renderDistance = new OptionInstance<>(
          "options.renderDistance",
          OptionInstance.noTooltip(),

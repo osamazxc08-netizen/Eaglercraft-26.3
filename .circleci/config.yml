@@ -1,0 +1,52 @@
+version: 2.1
+
+jobs:
+  build-single-html:
+    docker:
+      - image: cimg/openjdk:25.0
+    resource_class: xlarge
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+      EAGLER_BUILD_CAP_MIB: "13312"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gradle-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "game/build.gradle.kts" }}
+            - gradle-v1-
+      - run:
+          name: Install Node.js 22
+          command: |
+            if ! command -v node >/dev/null 2>&1 || [ "$(node -p 'Number(process.versions.node.split(".")[0])')" -lt 22 ]; then
+              sudo apt-get update
+              sudo apt-get install -y curl
+              curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+            node --version
+            npm --version
+      - run:
+          name: Verify Java 25 and Gradle
+          command: |
+            java -version
+            ./gradlew --version
+      - run:
+          name: Install locked build dependencies
+          command: npm ci
+      - run:
+          name: Build standalone offline HTML
+          no_output_timeout: 45m
+          command: npm run build:single
+      - store_artifacts:
+          path: eaglercraft-26.2-single.html
+          destination: eaglercraft-26.2-single.html
+      - save_cache:
+          key: gradle-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "game/build.gradle.kts" }}
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+
+workflows:
+  tablet-single-html-build:
+    jobs:
+      - build-single-html

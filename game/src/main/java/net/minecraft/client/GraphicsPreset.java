@@ -47,23 +47,23 @@ public enum GraphicsPreset implements StringRepresentable {
             // reference default render distance and lets gen keep up; sim 4 keeps mob simulation
             // reasonable while trimming per-tick chunk ticking. Both are just defaults the user
             // can raise in Options once the native noise kernel lands.
-            boolean eaglerWeb = net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.webGpuBackendFactory != null;
+            boolean eaglerWeb = net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.isBrowserRuntime();
             int viewDistance = eaglerWeb ? 4 : 8;
             set(screen, minecraft.options.biomeBlendRadius(), eaglerWeb ? 0 : 1);
             set(screen, minecraft.options.renderDistance(), viewDistance);
             set(screen, minecraft.options.prioritizeChunkUpdates(), PrioritizeChunkUpdates.NONE);
             set(screen, minecraft.options.simulationDistance(), eaglerWeb ? 4 : 6);
             set(screen, minecraft.options.ambientOcclusion(), false);
-            set(screen, minecraft.options.cloudStatus(), CloudStatus.FAST);
+            set(screen, minecraft.options.cloudStatus(), eaglerWeb ? CloudStatus.OFF : CloudStatus.FAST);
             set(screen, minecraft.options.particles(), eaglerWeb ? ParticleStatus.MINIMAL : ParticleStatus.DECREASED);
-            set(screen, minecraft.options.mipmapLevels(), 2);
+            set(screen, minecraft.options.mipmapLevels(), eaglerWeb ? 1 : 2);
             set(screen, minecraft.options.entityShadows(), false);
             set(screen, minecraft.options.entityDistanceScaling(), eaglerWeb ? 0.5 : 0.75);
             set(screen, minecraft.options.menuBackgroundBlurriness(), 2);
-            set(screen, minecraft.options.cloudRange(), 32);
+            set(screen, minecraft.options.cloudRange(), eaglerWeb ? 16 : 32);
             set(screen, minecraft.options.cutoutLeaves(), false);
             set(screen, minecraft.options.improvedTransparency(), false);
-            set(screen, minecraft.options.weatherRadius(), 5);
+            set(screen, minecraft.options.weatherRadius(), eaglerWeb ? 3 : 5);
             set(screen, minecraft.options.maxAnisotropyBit(), 1);
             set(screen, minecraft.options.textureFiltering(), TextureFilteringMethod.NONE);
             break;

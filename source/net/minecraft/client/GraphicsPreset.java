@@ -38,22 +38,23 @@ public enum GraphicsPreset implements StringRepresentable {
       GpuDevice device = RenderSystem.getDevice();
       switch (this) {
          case FAST: {
-            int viewDistance = 8;
-            set(screen, minecraft.options.biomeBlendRadius(), 1);
-            set(screen, minecraft.options.renderDistance(), 8);
+            int viewDistance = 6;
+            set(screen, minecraft.options.biomeBlendRadius(), 0);
+            set(screen, minecraft.options.renderDistance(), 6);
             set(screen, minecraft.options.prioritizeChunkUpdates(), PrioritizeChunkUpdates.NONE);
-            set(screen, minecraft.options.simulationDistance(), 6);
+            set(screen, minecraft.options.simulationDistance(), 5);
             set(screen, minecraft.options.ambientOcclusion(), false);
-            set(screen, minecraft.options.cloudStatus(), CloudStatus.FAST);
-            set(screen, minecraft.options.particles(), ParticleStatus.DECREASED);
-            set(screen, minecraft.options.mipmapLevels(), 2);
+            set(screen, minecraft.options.cloudStatus(), CloudStatus.OFF);
+            set(screen, minecraft.options.particles(), ParticleStatus.MINIMAL);
+            set(screen, minecraft.options.mipmapLevels(), 1);
             set(screen, minecraft.options.entityShadows(), false);
-            set(screen, minecraft.options.entityDistanceScaling(), 0.75);
-            set(screen, minecraft.options.menuBackgroundBlurriness(), 2);
-            set(screen, minecraft.options.cloudRange(), 32);
+            set(screen, minecraft.options.entityDistanceScaling(), 0.5);
+            set(screen, minecraft.options.chunkSectionFadeInTime(), 0.0);
+            set(screen, minecraft.options.menuBackgroundBlurriness(), 0);
+            set(screen, minecraft.options.cloudRange(), 16);
             set(screen, minecraft.options.cutoutLeaves(), false);
             set(screen, minecraft.options.improvedTransparency(), false);
-            set(screen, minecraft.options.weatherRadius(), 5);
+            set(screen, minecraft.options.weatherRadius(), 3);
             set(screen, minecraft.options.maxAnisotropyBit(), 1);
             set(screen, minecraft.options.textureFiltering(), TextureFilteringMethod.NONE);
             break;
