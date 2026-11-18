@@ -1,0 +1,36 @@
+version: 2.1
+
+orbs:
+  openjdk: circleci/openjdk@1.11.0
+
+jobs:
+  compile-game-java:
+    docker:
+      - image: cimg/openjdk:25.0
+    resource_class: xlarge
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx6g\ -XX:MaxMetaspaceSize=1g"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gradle-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "game/build.gradle.kts" }}
+            - gradle-v1-
+      - run:
+          name: Verify Java toolchain
+          command: |
+            java -version
+            ./gradlew --version
+      - run:
+          name: Compile Minecraft game Java sources
+          command: ./gradlew :game:compileJava --console=plain --no-daemon
+      - save_cache:
+          key: gradle-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "game/build.gradle.kts" }}
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+
+workflows:
+  tablet-source-check:
+    jobs:
+      - compile-game-java
