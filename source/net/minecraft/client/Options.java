@@ -161,7 +161,7 @@ public class Options {
       (caption, value) -> genericValueLabel(caption, Component.translatable(value.getKey())),
       new OptionInstance.SliderableEnum<>(List.of(GraphicsPreset.values()), GraphicsPreset.CODEC),
       GraphicsPreset.CODEC,
-      GraphicsPreset.FANCY,
+      GraphicsPreset.FAST,
       this::applyGraphicsPreset
    );
    private static final Component INACTIVITY_FPS_LIMIT_TOOLTIP_MINIMIZED = Component.translatable("options.inactivityFpsLimit.minimized.tooltip");
