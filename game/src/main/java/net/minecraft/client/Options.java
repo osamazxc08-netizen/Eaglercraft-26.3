@@ -124,7 +124,7 @@ public class Options {
          : genericValueLabel(caption, Component.translatable("options.framerate", value)),
       new OptionInstance.IntRange(1, 26).xmap(value -> value * 10, value -> value / 10, true),
       Codec.intRange(10, 260),
-      120,
+      60,
       value -> Minecraft.getInstance().getFramerateLimitTracker().setFramerateLimit(value)
    );
    private PreferredGraphicsApi preferredGraphicsBackendFromStartup = PreferredGraphicsApi.DEFAULT;
