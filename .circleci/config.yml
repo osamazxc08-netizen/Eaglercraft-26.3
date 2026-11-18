@@ -6,7 +6,7 @@ jobs:
       - image: cimg/openjdk:25.0
     resource_class: xlarge
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx6g\ -XX:MaxMetaspaceSize=1g"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +20,7 @@ jobs:
             ./gradlew --version
       - run:
           name: Compile Minecraft game Java sources
-          command: ./gradlew :game:compileJava --console=plain --no-daemon
+          command: ./gradlew -Dorg.gradle.jvmargs="-Xmx6g -XX:MaxMetaspaceSize=1g" :game:compileJava --console=plain --no-daemon
       - save_cache:
           key: gradle-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "game/build.gradle.kts" }}
           paths:
