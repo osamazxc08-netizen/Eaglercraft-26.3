@@ -138,7 +138,11 @@ public class GameRenderer implements AutoCloseable, TrackedWaypoint.Projector {
       this.lightmapRenderStateExtractor = new LightmapRenderStateExtractor(this, minecraft);
 
       try {
-         int maxSectionBuilders = Runtime.getRuntime().availableProcessors();
+         boolean eaglerWeb = net.lax1dude.eaglercraft.v1_8.minecraft.EaglerHosted.webGpuBackendFactory != null;
+         int availableSectionBuilders = Runtime.getRuntime().availableProcessors();
+         int maxSectionBuilders = eaglerWeb
+            ? Math.max(1, Math.min(2, availableSectionBuilders))
+            : availableSectionBuilders;
          this.renderBuffers = new RenderBuffers(maxSectionBuilders);
       } catch (OutOfMemoryError e) {
          MessageBox.error(
