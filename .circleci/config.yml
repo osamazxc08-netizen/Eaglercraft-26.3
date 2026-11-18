@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  openjdk: circleci/openjdk@1.11.0
-
 jobs:
   compile-game-java:
     docker:
