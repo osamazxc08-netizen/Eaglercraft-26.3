@@ -42,7 +42,7 @@ public enum GraphicsPreset implements StringRepresentable {
             set(screen, minecraft.options.biomeBlendRadius(), 0);
             set(screen, minecraft.options.renderDistance(), 6);
             set(screen, minecraft.options.prioritizeChunkUpdates(), PrioritizeChunkUpdates.NONE);
-            set(screen, minecraft.options.simulationDistance(), 4);
+            set(screen, minecraft.options.simulationDistance(), 5);
             set(screen, minecraft.options.ambientOcclusion(), false);
             set(screen, minecraft.options.cloudStatus(), CloudStatus.OFF);
             set(screen, minecraft.options.particles(), ParticleStatus.MINIMAL);
